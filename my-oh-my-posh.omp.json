@@ -8,45 +8,9 @@
       "newline": true,
       "segments": [
         {
-          "background": "#2f2f2f",
-          "foreground": "#26C6DA",
-          "leading_diamond": "\ue0c7\u2593",
-          "properties": {
-            "alpine": "\uf300",
-            "arch": "\uf303",
-            "centos": "\uf304",
-            "debian": "\uf306",
-            "elementary": "\uf309",
-            "fedora": "\uf30a",
-            "gentoo": "\uf30d",
-            "linux": "\ue712",
-            "macos": "\ue711",
-            "manjaro": "\uf312",
-            "mint": "\uf30f",
-            "opensuse": "\uf314",
-            "raspbian": "\uf315",
-            "ubuntu": "\uf31c",
-            "windows": "\ue70f"
-          },
-          "style": "diamond",
-          "template": " {{ if .WSL }}\ue712 on {{ end }}{{ .Icon }}<#7a7a7a> \ue0b1</>",
-          "type": "os"
-        },
-        {
-          "type": "time",
-          "background": "#2f2f2f",
-          "foreground": "#689f38",
-          "properties": {
-            "time_format": "15:04:05"
-          },
-          "style": "diamond",
-          "template": " {{ .CurrentDate | date .Format }} "
-        },
-        {
           "type": "path",
           "background": "#91ddff",
           "foreground": "#100e23",
-          "powerline_symbol": "\ue0b0",
           "properties": {
             "style": "agnoster_full"
           },
