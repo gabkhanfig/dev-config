@@ -33,6 +33,16 @@
           "type": "os"
         },
         {
+          "type": "time",
+          "background": "#2f2f2f",
+          "foreground": "#7a7a7a",
+          "properties": {
+            "time_format": "15:04:05"
+          },
+          "style": "powerline",
+          "template": " {{ .CurrentDate | date .Format }} "
+        },
+        {
           "type": "path",
           "background": "#91ddff",
           "foreground": "#100e23",
