@@ -1,6 +1,7 @@
 return {
     {
         "Civitasv/cmake-tools.nvim",
+        lazy = false,
         dependencies = {
         "nvim-lua/plenary.nvim",
         },
@@ -90,6 +91,15 @@ return {
         keys = {
             { "<F5>", "<cmd>CMakeRun<cr>", desc = "CMake Run (F5)" },
             { "<F6>", "<cmd>CMakeDebug<cr>", desc = "CMake Debug (F6)" },
+        },
+        cmd = {
+            "CMakeGenerate",
+            "CMakeBuild",
+            "CMakeRun",
+            "CMakeDebug",
+            "CMakeSelectBuildType",
+            "CMakeSelectKit",
+            "CMakeSelectConfigurePreset",
         },
     },
 

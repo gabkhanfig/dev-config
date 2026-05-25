@@ -5,14 +5,15 @@ After=network.target
 [Service]
 User=llm
 WorkingDirectory=/home/llm/llama.cpp
-ExecStart=HIP_VISIBLE_DEVICES=0 ROCR_VISIBLE_DEVICES=0 \
-/home/llm/llama.cpp/build/bin/llama-server \
+Environment=HIP_VISIBLE_DEVICES=0
+Environment=ROCR_VISIBLE_DEVICES=0
+ExecStart=/home/llm/llama.cpp/build/bin/llama-server \
 --model /home/llm/some_model_path.gguf \
 --host 0.0.0.0 \
 --port 11433 \
 --ctx-size 131072 \
 --n-gpu-layers 99 \
---api-key-file ~/llama-keys.txt
+--api-key-file /home/llm/llama-keys.txt
 Restart=always
 RestartSec=3
 StandardOutput=journal
