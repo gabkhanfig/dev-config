@@ -175,18 +175,16 @@ do
   -- See `:help 'confirm'`
   vim.o.confirm = true
 
-  -- Set terminal tab title to "neovim <directory>"
+  -- Set terminal tab title to "nvim <top-level-dir>" or "nvim <file>"
   vim.o.title = true
-  local function update_title()
-    local path = vim.fn.expand '%:p:h'
-    local dir = path and path ~= '' and vim.fn.fnamemodify(path, ':t') or vim.fn.getcwd()
-    vim.o.titlestring = 'nvim ' .. dir
+  local args = vim.fn.argv()
+  local first_arg = args[1] or args[0]
+  if first_arg then
+    local name = vim.fn.fnamemodify(first_arg, ':t')
+    vim.o.titlestring = 'nvim ' .. (name == '.' and vim.fn.fnamemodify(vim.fn.getcwd(), ':t') or name)
+  else
+    vim.o.titlestring = 'nvim ' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
   end
-  vim.api.nvim_create_autocmd({ 'BufEnter', 'DirChanged' }, {
-    group = vim.api.nvim_create_augroup('neovim-title', { clear = true }),
-    callback = update_title,
-  })
-  update_title()
 
   -- [[ Basic Keymaps ]]
   --  See `:help vim.keymap.set()`
