@@ -42,6 +42,7 @@ require('mason-nvim-dap').setup {
   ensure_installed = {
     -- Update this to ensure that you have the debuggers for the langs you want
     'delve',
+    'codelldb',
   },
 }
 
@@ -82,8 +83,8 @@ dapui.setup {
 -- end
 
 dap.listeners.after.event_initialized['dapui_config'] = dapui.open
-dap.listeners.before.event_terminated['dapui_config'] = dapui.close
-dap.listeners.before.event_exited['dapui_config'] = dapui.close
+-- dap.listeners.before.event_terminated['dapui_config'] = dapui.close
+-- dap.listeners.before.event_exited['dapui_config'] = dapui.close
 
 -- Install golang specific config
 require('dap-go').setup {
@@ -93,3 +94,7 @@ require('dap-go').setup {
     detached = vim.fn.has 'win32' == 0,
   },
 }
+
+-- Alias lldb -> codelldb for VSCode launch.json compatibility
+local dap = require('dap')
+dap.adapters.lldb = dap.adapters.codelldb
