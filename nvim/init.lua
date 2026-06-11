@@ -175,6 +175,19 @@ do
   -- See `:help 'confirm'`
   vim.o.confirm = true
 
+  -- Set terminal tab title to "neovim <directory>"
+  vim.o.title = true
+  local function update_title()
+    local path = vim.fn.expand '%:p:h'
+    local dir = path and path ~= '' and vim.fn.fnamemodify(path, ':t') or vim.fn.getcwd()
+    vim.o.titlestring = 'nvim ' .. dir
+  end
+  vim.api.nvim_create_autocmd({ 'BufEnter', 'DirChanged' }, {
+    group = vim.api.nvim_create_augroup('neovim-title', { clear = true }),
+    callback = update_title,
+  })
+  update_title()
+
   -- [[ Basic Keymaps ]]
   --  See `:help vim.keymap.set()`
 
@@ -452,24 +465,20 @@ end
 -- ============================================================
 do
   vim.opt.termguicolors = true
-  vim.pack.add({
+  vim.pack.add {
     { src = gh 'akinsho/bufferline.nvim', version = vim.version.range '4.*' },
     { src = gh 'nvim-tree/nvim-web-devicons' },
-  })
+  }
 
   require('bufferline').setup {
     options = {
       mode = 'buffers',
       separator_style = 'slant',
-      close_command = function(bufnr)
-        vim.cmd('bdelete ' .. bufnr)
-      end,
-      right_mouse_command = function(bufnr)
-        vim.cmd('bdelete ' .. bufnr)
-      end,
+      close_command = function(bufnr) vim.cmd('bdelete ' .. bufnr) end,
+      right_mouse_command = function(bufnr) vim.cmd('bdelete ' .. bufnr) end,
       diagnostics = 'nvim_lsp',
       diagnostics_indicator = function(count, level, diagnostics_dict, context)
-        local icon = level:match('error') and '🔴 ' or '🟡 '
+        local icon = level:match 'error' and '🔴 ' or '🟡 '
         return ' ' .. icon .. count
       end,
       offsets = {
@@ -858,16 +867,16 @@ do
       -- python = { "isort", "black" },
       --
       -- You can use 'stop_after_first' to run the first available formatter from the list
-      javascript = { "prettierd", "prettier", stop_after_first = true },
-      typescript = { "prettierd", "prettier", stop_after_first = true },
-      javascriptreact = { "prettierd", "prettier", stop_after_first = true },
-      typescriptreact = { "prettierd", "prettier", stop_after_first = true },
-      json = { "prettierd", "prettier", stop_after_first = true },
-      yaml = { "prettierd", "prettier", stop_after_first = true },
-      markdown = { "prettierd", "prettier", stop_after_first = true },
-      html = { "prettierd", "prettier", stop_after_first = true },
-      css = { "prettierd", "prettier", stop_after_first = true },
-      scss = { "prettierd", "prettier", stop_after_first = true },
+      javascript = { 'prettierd', 'prettier', stop_after_first = true },
+      typescript = { 'prettierd', 'prettier', stop_after_first = true },
+      javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
+      typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
+      json = { 'prettierd', 'prettier', stop_after_first = true },
+      yaml = { 'prettierd', 'prettier', stop_after_first = true },
+      markdown = { 'prettierd', 'prettier', stop_after_first = true },
+      html = { 'prettierd', 'prettier', stop_after_first = true },
+      css = { 'prettierd', 'prettier', stop_after_first = true },
+      scss = { 'prettierd', 'prettier', stop_after_first = true },
     },
   }
 
@@ -970,7 +979,26 @@ do
   vim.pack.add { { src = gh 'nvim-treesitter/nvim-treesitter', version = 'main' } }
 
   -- Ensure basic parsers are installed
-  local parsers = { 'bash', 'c', 'cmake', 'diff', 'dockerfile', 'html', 'javascript', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'python', 'query', 'rust', 'tsx', 'typescript', 'vim', 'vimdoc' }
+  local parsers = {
+    'bash',
+    'c',
+    'cmake',
+    'diff',
+    'dockerfile',
+    'html',
+    'javascript',
+    'lua',
+    'luadoc',
+    'markdown',
+    'markdown_inline',
+    'python',
+    'query',
+    'rust',
+    'tsx',
+    'typescript',
+    'vim',
+    'vimdoc',
+  }
   require('nvim-treesitter').install(parsers)
 
   ---@param buf integer
