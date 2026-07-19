@@ -8,7 +8,7 @@ This document will only outline the proxmox setup.
 # In proxmox host console
 
 ls -l /dev/disk/by-id/
-lbslk -o NAME,SIZE,MODEL,SERIAL
+lsblk -o NAME,SIZE,MODEL,SERIAL
 ```
 
 ## Create Pool
@@ -17,6 +17,8 @@ Use `compatibility=openzfs-2.1` so that importing it on another system later is 
 
 ```sh
 # In proxmox host console
+
+# NOTE: avoid using the `wwn-` prefixed id.
 
 # Create duplicated pool
 zpool create -o compatibility=openzfs-2.1 <POOL_NAME> mirror /dev/disk/by-id/<FIRST_DISK_ID_HERE> /dev/disk/by-id/<SECOND_DISK_ID_HERE>
@@ -34,7 +36,7 @@ You can create datasets within a pool to isolate what has access to what.
 zfs create <POOL_NAME>/<DATASET_NAME>
 
 # Setup ownership
-chown -R 100000:100000 <POOL_NAME>/<DATASET_NAME>
+chown -R 100000:100000 /<POOL_NAME>/<DATASET_NAME>
 
 # Examples
 zfs create tank1/forgejo

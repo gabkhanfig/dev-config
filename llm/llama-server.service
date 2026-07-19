@@ -3,7 +3,7 @@ Description=Llama.cpp HTTP Inference Server
 After=network.target
 
 [Service]
-User=llm
+User=llama
 WorkingDirectory=/home/llm/llama.cpp
 Environment=HIP_VISIBLE_DEVICES=0
 Environment=ROCR_VISIBLE_DEVICES=0

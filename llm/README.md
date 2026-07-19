@@ -2,23 +2,23 @@
 
 ## Make LLM user
 
-Create a dedicated `llm` user that owns the llama.cpp checkout, the model files,
+Create a dedicated `llama` user that owns the llama.cpp checkout, the model files,
 and the API key file. The systemd service will run as this user.
 
 ```sh
 # Create user with a home directory and bash shell
-sudo useradd -m -s /bin/bash llm
+sudo useradd -m -s /bin/bash llama
 
 # Grant GPU device access
 #   - render: ROCm/DRM compute device nodes (/dev/dri/renderD*)
 #   - video:  GPU device nodes (/dev/dri/card*, /dev/kfd on AMD)
-sudo usermod -aG render,video llm
+sudo usermod -aG render,video llama
 ```
 
-Then switch into the `llm` user for the rest of the setup (build, key file, etc.):
+Then switch into the `llama` user for the rest of the setup (build, key file, etc.):
 
 ```sh
-sudo -iu llm
+sudo -iu llama
 ```
 
 Verify GPU access from the new user shell before continuing:
@@ -30,7 +30,7 @@ rocminfo | grep -i 'gfx\|Name'
 nvidia-smi
 ```
 
-If `rocminfo` reports no agents or `/dev/kfd` permission errors, log the `llm`
+If `rocminfo` reports no agents or `/dev/kfd` permission errors, log the `llama`
 user fully out and back in (or reboot) so the new group memberships take effect.
 
 ## Building llama.cpp
@@ -102,8 +102,8 @@ lines if you're not on AMD.
 ### 3. Reload, Enable, and Start
 
 ```sh
-sudo systemctl daemon-reload
-sudo systemctl enable llama-server
+sudo systemctl daemon-reload && \
+sudo systemctl enable llama-server && \
 sudo systemctl start llama-server
 ```
 
