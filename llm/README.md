@@ -122,8 +122,6 @@ curl http://localhost:11433/v1/chat/completions \
 -H "Content-Type: application/json" \
 -d '{"messages":[{"role":"user","content":"hi"}]}'
 
-curl http://mineral-pause.with.playit.plus:1447/v1/chat/completions -H "Authorization: Bearer SCOTT_OPENCODE_KEY_POO" -H "Content-Type: application/json" -d '{"messages":[{"role":"user","content":"hi"}]}'
-
 # And this one should not work
 curl http://localhost:11433/v1/chat/completions \
 -H "Authorization: Bearer WRONG_KEY" \
